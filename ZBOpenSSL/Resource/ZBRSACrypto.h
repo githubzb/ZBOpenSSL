@@ -22,11 +22,18 @@ typedef NS_ENUM(NSInteger, ZBKeyType) {
 };
 
 typedef NS_ENUM(int, ZBRSAPaddingType) {
-    ZBRSAPaddingTypeNone    = RSA_NO_PADDING,
-    ZBRSAPaddingTypePKCS1   = RSA_PKCS1_PADDING,
-    ZBRSAPaddingTypeSSLV23  = RSA_SSLV23_PADDING,
-    ZBRSAPaddingTypePKCS1_OAEP  = RSA_PKCS1_OAEP_PADDING,
-    ZBRSAPaddingTypeX931        = RSA_X931_PADDING
+    ZBRSAPaddingTypePKCS1       = RSA_PKCS1_PADDING,
+    ZBRSAPaddingTypePKCS1_OAEP  = RSA_PKCS1_OAEP_PADDING
+};
+
+/**
+ -----BEGIN PRIVATE KEY-----:PKCS#8
+ -----BEGIN RSA PRIVATE KEY-----:PKCS#1
+ 参考：https://ask.helplib.com/java/post_787598
+ */
+typedef NS_ENUM(NSInteger, ZBPemType) {
+    ZBPemTypePKCS1  = 0,
+    ZBPemTypePKCS8  = 1
 };
 
 @interface ZBRSACrypto : NSObject
@@ -41,21 +48,18 @@ typedef NS_ENUM(int, ZBRSAPaddingType) {
 /**
  设置自定义公钥
 
- @param pk  公钥字符串
+ @param pk      公钥字符串
+ @param type    编码类型
  */
-+ (void)setCustomPublicKey:(NSString *)pk;
++ (void)setCustomPublicKey:(NSString *)pk pemType:(ZBPemType)type;
 
 /**
  设置自定义私钥
 
- @param prk 私钥字符串
+ @param prk     私钥字符串
+ @param type    编码类型
  */
-+ (void)setCustomPrivateKey:(NSString *)prk;
-
-/**
- 清空自定义秘钥
- */
-+ (void)clearCustomKey;
++ (void)setCustomPrivateKey:(NSString *)prk pemType:(ZBPemType)type;
 
 /**
  判断publicKey.pem和privateKey.pem文件是否存在
@@ -75,16 +79,18 @@ typedef NS_ENUM(int, ZBRSAPaddingType) {
 /**
  导出publicKey.pem和privateKey.pem
 
+ @param type    编码类型
  @return        YES：成功导出
  */
-+ (BOOL)exportPem;
++ (BOOL)exportPem:(ZBPemType)type;
 
 /**
  导入publicKey.pem和privateKey.pem
 
+ @param type    编码类型
  @return        YES：成功导入
  */
-+ (BOOL)importPem;
++ (BOOL)importPem:(ZBPemType)type;
 
 /**
  加密数据
@@ -134,8 +140,92 @@ typedef NS_ENUM(int, ZBRSAPaddingType) {
                     paddingType:(ZBRSAPaddingType)padding
                            data:(NSData *)data;
 
+#pragma mark - RSA Sign
+
+/**
+ RSA签名
+
+ @param data    需要签名的数据
+ @param custom  YES：采用自定义私钥签名
+ @return        签名后的数据
+ */
++ (NSData *)signBySHA128:(NSData *)data customPrivateKey:(BOOL)custom;
+
+/**
+ RSA签名
+
+ @param data    需要签名的数据
+ @param custom  YES：采用自定义私钥签名
+ @return        签名后的数据
+ */
++ (NSData *)signBySHA256:(NSData *)data customPrivateKey:(BOOL)custom;
+
+/**
+ RSA签名
+
+ @param data    需要签名的数据
+ @param custom  YES：采用自定义私钥签名
+ @return        签名后的数据
+ */
++ (NSData *)signByMD5:(NSData *)data customPrivateKey:(BOOL)custom;
+
+/**
+ RSA校验签名
+
+ @param sign    签名数据
+ @param data    原始数据
+ @param custom  YES：采用自定义公钥签名
+ @return        YES：签名校验通过
+ */
++ (BOOL)verifySignBySHA128:(NSData *)sign
+                      data:(NSData *)data
+           customPublicKey:(BOOL)custom;
+
+/**
+ RSA校验签名
+
+ @param sign    签名数据
+ @param data    原始数据
+ @param custom  YES：采用自定义公钥签名
+ @return        YES：签名校验通过
+ */
++ (BOOL)verifySignBySHA256:(NSData *)sign
+                      data:(NSData *)data
+           customPublicKey:(BOOL)custom;
+
+/**
+ RSA校验签名
+
+ @param sign    签名数据
+ @param data    原始数据
+ @param custom  YES：采用自定义公钥签名
+ @return        YES：签名校验通过
+ */
++ (BOOL)verifySignByMD5:(NSData *)sign
+                   data:(NSData *)data
+        customPublicKey:(BOOL)custom;
+
 @end
 
+
+
+
+
+
+/**
+ 设置自定义RSA公钥
+
+ @param key     公钥字符串
+ @param type    编码类型
+ */
+void ZBRSA_CustomPUBKEY_init(NSString *key, ZBPemType type);
+/**
+ 设置自定义RSA私钥
+ 
+ @param key     私钥字符串
+ @param type    编码类型
+ */
+void ZBRSA_CustomPrivate_init(NSString *key, ZBPemType type);
 /**
  RSA加密
 
@@ -175,4 +265,102 @@ NSString * ZBRSA_decrypt(NSString *websafeBase64, ZBKeyType type, ZBRSAPaddingTy
  @return                解密后的原字符串
  */
 NSString * ZBRSA_decrypt_custom(NSString *websafeBase64, ZBKeyType type, ZBRSAPaddingType padding);
+
+#pragma mark - RSA Sign
+
+/**
+ RSA签名
+
+ @param message 签名原始字符串
+ @return        签名后的字符串（websafe Base64 encode and no padded）
+ */
+NSString *ZBRSA_sign_sha128(NSString *message);
+/**
+ RSA签名
+ 
+ @param message 签名原始字符串
+ @return        签名后的字符串（websafe Base64 encode and no padded）
+ */
+NSString *ZBRSA_sign_sha256(NSString *message);
+/**
+ RSA签名
+ 
+ @param message 签名原始字符串
+ @return        签名后的字符串（websafe Base64 encode and no padded）
+ */
+NSString *ZBRSA_sign_md5(NSString *message);
+
+/**
+ RSA签名(自定义私钥)
+ 
+ @param message 签名原始字符串
+ @return        签名后的字符串（websafe Base64 encode and no padded）
+ */
+NSString *ZBRSA_sign_sha128_custom(NSString *message);
+/**
+ RSA签名(自定义私钥)
+ 
+ @param message 签名原始字符串
+ @return        签名后的字符串（websafe Base64 encode and no padded）
+ */
+NSString *ZBRSA_sign_sha256_custom(NSString *message);
+/**
+ RSA签名(自定义私钥)
+ 
+ @param message 签名原始字符串
+ @return        签名后的字符串（websafe Base64 encode and no padded）
+ */
+NSString *ZBRSA_sign_md5_custom(NSString *message);
+
+
+/**
+ RSA校验签名
+
+ @param signWebSafeBase64   签名字符串（websafe Base64 encode and no padded）
+ @param message             签名原始字符串
+ @return                    YES：校验通过
+ */
+BOOL ZBRSA_verify_sha128(NSString *signWebSafeBase64, NSString *message);
+/**
+ RSA校验签名
+ 
+ @param signWebSafeBase64   签名字符串（websafe Base64 encode and no padded）
+ @param message             签名原始字符串
+ @return                    YES：校验通过
+ */
+BOOL ZBRSA_verify_sha256(NSString *signWebSafeBase64, NSString *message);
+/**
+ RSA校验签名
+ 
+ @param signWebSafeBase64   签名字符串（websafe Base64 encode and no padded）
+ @param message             签名原始字符串
+ @return                    YES：校验通过
+ */
+BOOL ZBRSA_verify_md5(NSString *signWebSafeBase64, NSString *message);
+
+
+/**
+ RSA校验签名(自定义公钥)
+ 
+ @param signWebSafeBase64   签名字符串（websafe Base64 encode and no padded）
+ @param message             签名原始字符串
+ @return                    YES：校验通过
+ */
+BOOL ZBRSA_verify_sha128_custom(NSString *signWebSafeBase64, NSString *message);
+/**
+ RSA校验签名(自定义公钥)
+ 
+ @param signWebSafeBase64   签名字符串（websafe Base64 encode and no padded）
+ @param message             签名原始字符串
+ @return                    YES：校验通过
+ */
+BOOL ZBRSA_verify_sha256_custom(NSString *signWebSafeBase64, NSString *message);
+/**
+ RSA校验签名(自定义公钥)
+ 
+ @param signWebSafeBase64   签名字符串（websafe Base64 encode and no padded）
+ @param message             签名原始字符串
+ @return                    YES：校验通过
+ */
+BOOL ZBRSA_verify_md5_custom(NSString *signWebSafeBase64, NSString *message);
 

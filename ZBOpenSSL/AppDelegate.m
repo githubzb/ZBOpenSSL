@@ -18,19 +18,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSString *str = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    NSString *str = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 //    NSString *encodeStr = ZBRSA_encrypt(str, ZBKeyTypePublic, ZBRSAPaddingTypePKCS1);
 //    NSLog(@"--------加密数据:%@", encodeStr);
 //    NSString *decodeStr = ZBRSA_decrypt(encodeStr, ZBKeyTypePrivate, ZBRSAPaddingTypePKCS1);
 //    NSLog(@"--------解密数据:%@", decodeStr);
     
-    [ZBRSACrypto setCustomPublicKey:ZBRSACrypto.publicKey];
-    [ZBRSACrypto setCustomPrivateKey:ZBRSACrypto.privateKey];
+    ZBRSA_CustomPUBKEY_init(ZBRSACrypto.publicKey, ZBPemTypePKCS8);
+    ZBRSA_CustomPrivate_init(ZBRSACrypto.privateKey, ZBPemTypePKCS8);
+
+//    NSString *encodeStr = ZBRSA_encrypt_custom(str, ZBKeyTypePublic, ZBRSAPaddingTypePKCS1);
+//    NSLog(@"--------加密数据:%@", encodeStr);
+//    NSString *decodeStr = ZBRSA_decrypt_custom(encodeStr, ZBKeyTypePrivate, ZBRSAPaddingTypePKCS1);
+//    NSLog(@"--------解密数据:%@", decodeStr);
     
-    NSString *encodeStr = ZBRSA_encrypt_custom(str, ZBKeyTypePublic, ZBRSAPaddingTypePKCS1);
-    NSLog(@"--------加密数据:%@", encodeStr);
-    NSString *decodeStr = ZBRSA_decrypt_custom(encodeStr, ZBKeyTypePrivate, ZBRSAPaddingTypePKCS1);
-    NSLog(@"--------解密数据:%@", decodeStr);
+    NSString *sign = ZBRSA_sign_sha128_custom(str);
+    NSLog(@"------sign:%@", sign);
+    if (ZBRSA_verify_sha128_custom(sign, str)) {
+        NSLog(@"----校验通过");
+    }else{
+        NSLog(@"----未通过");
+    }
     
     return YES;
 }

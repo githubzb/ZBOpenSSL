@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D2B216B20EC6F08001A59FB /* ZBAESCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D2B216A20EC6F08001A59FB /* ZBAESCrypto.m */; };
 		6D5F838520E60D81004B3F6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5F838420E60D81004B3F6C /* AppDelegate.m */; };
 		6D5F838820E60D81004B3F6C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5F838720E60D81004B3F6C /* ViewController.m */; };
 		6D5F838B20E60D81004B3F6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D5F838920E60D81004B3F6C /* Main.storyboard */; };
@@ -20,6 +21,8 @@
 
 /* Begin PBXFileReference section */
 		5D2078D736D4641BDD410760 /* libPods-ZBOpenSSL.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZBOpenSSL.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D2B216920EC6F08001A59FB /* ZBAESCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBAESCrypto.h; sourceTree = "<group>"; };
+		6D2B216A20EC6F08001A59FB /* ZBAESCrypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBAESCrypto.m; sourceTree = "<group>"; };
 		6D5F838020E60D81004B3F6C /* ZBOpenSSL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZBOpenSSL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D5F838320E60D81004B3F6C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6D5F838420E60D81004B3F6C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -91,6 +94,8 @@
 			children = (
 				6D5F839A20E612BD004B3F6C /* ZBRSACrypto.h */,
 				6D5F839B20E612BD004B3F6C /* ZBRSACrypto.m */,
+				6D2B216920EC6F08001A59FB /* ZBAESCrypto.h */,
+				6D2B216A20EC6F08001A59FB /* ZBAESCrypto.m */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 			files = (
 				6D5F838820E60D81004B3F6C /* ViewController.m in Sources */,
 				6D5F839320E60D85004B3F6C /* main.m in Sources */,
+				6D2B216B20EC6F08001A59FB /* ZBAESCrypto.m in Sources */,
 				6D5F838520E60D81004B3F6C /* AppDelegate.m in Sources */,
 				6D5F839C20E612BD004B3F6C /* ZBRSACrypto.m in Sources */,
 			);
