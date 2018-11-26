@@ -4,5 +4,6 @@ inhibit_all_warnings!
 
 target 'ZBOpenSSL' do
     pod 'GTMBase64', '~> 1.0.1'
+    pod 'CocoaSecurity', '~> 1.2.4'
 end
 

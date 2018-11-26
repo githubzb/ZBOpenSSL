@@ -7,33 +7,82 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GTMBase64/GTMBase64.h>
-#import <openssl/evp.h>
 
+typedef NS_ENUM(NSUInteger, ZBAESKeySize) {
+    ZBAESKeySize128 = 16,
+    ZBAESKeySize192 = 24,
+    ZBAESKeySize256 = 32
+};
+
+typedef NS_ENUM(NSInteger, ZBAESErrorCode) {
+    ZBAESErrorCodeKeySize = 1,
+    ZBAESErrorCodeEVP = 2
+};
+
+typedef NS_ENUM(NSInteger, ZBAESMode) {
+    ZBAESModeECB = 0,
+    ZBAESModeCBC,
+    ZBAESModeCTR,
+    ZBAESModeOFB,
+    ZBAESModeCFB
+};
+
+FOUNDATION_EXPORT NSString * const ZBAesErrorDomain;
+
+//所有加密解密Padding方式为PKCS padding
 @interface ZBAESCrypto : NSObject
 
 /**
- AES加密
+ 生成AES加解密的Key
 
- @param data    明文数据
- @param type    加密类型
- @param pwd     秘钥
- @return        加密后的数据
+ @param size    key的长度
+ @param error   错误
+ @return        data
  */
-+ (NSData *)encrypt:(NSData *)data
-               type:(const EVP_CIPHER *)type
-           password:(NSString *)pwd;
++ (NSData *)generateKey:(ZBAESKeySize)size error:(NSError **)error;
 
 /**
- AES解密
+ 生成AES加解密的IV
 
- @param data    加密后的数据
- @param type    解密类型（一定要与加密一致）
- @param pwd     秘钥
- @return        解密后的数据
+ @return data
  */
-+ (NSData *)decrypt:(NSData *)data
-               type:(const EVP_CIPHER *)type
-           password:(NSString *)pwd;
++ (NSData *)generateIV;
+
+
+/**
+ 加密
+
+ @param mode    加密模式
+ @param data    明文数据
+ @param key     秘钥
+ @param ksize   秘钥长度
+ @param iv      iv向量
+ @param error   错误
+ @return        data
+ */
++ (NSData *)encrypt_mode:(ZBAESMode)mode
+                    data:(NSData *)data
+                    key:(NSData *)key
+                keySize:(ZBAESKeySize)ksize
+                     iv:(NSData *)iv
+                  error:(NSError **)error;
+
+/**
+ 解密
+
+ @param mode    解密模式
+ @param data    密文数据
+ @param key     秘钥
+ @param ksize   秘钥长度
+ @param iv      iv向量
+ @param error   错误
+ @return        data
+ */
++ (NSData *)decrypt_mode:(ZBAESMode)mode
+                    data:(NSData *)data
+                    key:(NSData *)key
+                keySize:(ZBAESKeySize)ksize
+                     iv:(NSData *)iv
+                  error:(NSError **)error;
 
 @end

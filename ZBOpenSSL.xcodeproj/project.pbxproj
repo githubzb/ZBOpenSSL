@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6D2B216B20EC6F08001A59FB /* ZBAESCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D2B216A20EC6F08001A59FB /* ZBAESCrypto.m */; };
+		6D35D2CD20F36D7400C23A5B /* ZBMD5Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D2CC20F36D7400C23A5B /* ZBMD5Crypto.m */; };
+		6D35D2D020F36F3B00C23A5B /* ZBHexCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D2CF20F36F3B00C23A5B /* ZBHexCrypto.m */; };
 		6D5F838520E60D81004B3F6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5F838420E60D81004B3F6C /* AppDelegate.m */; };
 		6D5F838820E60D81004B3F6C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5F838720E60D81004B3F6C /* ViewController.m */; };
 		6D5F838B20E60D81004B3F6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D5F838920E60D81004B3F6C /* Main.storyboard */; };
@@ -16,6 +18,9 @@
 		6D5F839320E60D85004B3F6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5F839220E60D85004B3F6C /* main.m */; };
 		6D5F839C20E612BD004B3F6C /* ZBRSACrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5F839B20E612BD004B3F6C /* ZBRSACrypto.m */; };
 		6D5F839E20E615CD004B3F6C /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5F839D20E615CD004B3F6C /* openssl.framework */; };
+		6D80564420F4A34E0034BB05 /* ZBSHACrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D80564320F4A34E0034BB05 /* ZBSHACrypto.m */; };
+		6D80564720F4AA280034BB05 /* ZBHmacCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D80564620F4AA280034BB05 /* ZBHmacCrypto.m */; };
+		6DFA01F42110656800E2085A /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA01F32110656800E2085A /* encrypt.c */; };
 		8416A5547725CE752D73CB28 /* libPods-ZBOpenSSL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2078D736D4641BDD410760 /* libPods-ZBOpenSSL.a */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +28,10 @@
 		5D2078D736D4641BDD410760 /* libPods-ZBOpenSSL.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZBOpenSSL.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D2B216920EC6F08001A59FB /* ZBAESCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBAESCrypto.h; sourceTree = "<group>"; };
 		6D2B216A20EC6F08001A59FB /* ZBAESCrypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBAESCrypto.m; sourceTree = "<group>"; };
+		6D35D2CB20F36D7400C23A5B /* ZBMD5Crypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBMD5Crypto.h; sourceTree = "<group>"; };
+		6D35D2CC20F36D7400C23A5B /* ZBMD5Crypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBMD5Crypto.m; sourceTree = "<group>"; };
+		6D35D2CE20F36F3B00C23A5B /* ZBHexCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBHexCrypto.h; sourceTree = "<group>"; };
+		6D35D2CF20F36F3B00C23A5B /* ZBHexCrypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBHexCrypto.m; sourceTree = "<group>"; };
 		6D5F838020E60D81004B3F6C /* ZBOpenSSL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZBOpenSSL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D5F838320E60D81004B3F6C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6D5F838420E60D81004B3F6C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -36,6 +45,12 @@
 		6D5F839A20E612BD004B3F6C /* ZBRSACrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBRSACrypto.h; sourceTree = "<group>"; };
 		6D5F839B20E612BD004B3F6C /* ZBRSACrypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBRSACrypto.m; sourceTree = "<group>"; };
 		6D5F839D20E615CD004B3F6C /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = openssl.framework; sourceTree = "<group>"; };
+		6D80564220F4A34E0034BB05 /* ZBSHACrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBSHACrypto.h; sourceTree = "<group>"; };
+		6D80564320F4A34E0034BB05 /* ZBSHACrypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBSHACrypto.m; sourceTree = "<group>"; };
+		6D80564520F4AA280034BB05 /* ZBHmacCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBHmacCrypto.h; sourceTree = "<group>"; };
+		6D80564620F4AA280034BB05 /* ZBHmacCrypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZBHmacCrypto.m; sourceTree = "<group>"; };
+		6DFA01F22110656800E2085A /* encrypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = encrypt.h; sourceTree = "<group>"; };
+		6DFA01F32110656800E2085A /* encrypt.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = encrypt.c; sourceTree = "<group>"; };
 		71F2B18CE1A16549D216D519 /* Pods-ZBOpenSSL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZBOpenSSL.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZBOpenSSL/Pods-ZBOpenSSL.release.xcconfig"; sourceTree = "<group>"; };
 		9EEE6A532663F7D1B300FF15 /* Pods-ZBOpenSSL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZBOpenSSL.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZBOpenSSL/Pods-ZBOpenSSL.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +100,8 @@
 				6D5F838E20E60D85004B3F6C /* LaunchScreen.storyboard */,
 				6D5F839120E60D85004B3F6C /* Info.plist */,
 				6D5F839220E60D85004B3F6C /* main.m */,
+				6DFA01F22110656800E2085A /* encrypt.h */,
+				6DFA01F32110656800E2085A /* encrypt.c */,
 			);
 			path = ZBOpenSSL;
 			sourceTree = "<group>";
@@ -96,6 +113,14 @@
 				6D5F839B20E612BD004B3F6C /* ZBRSACrypto.m */,
 				6D2B216920EC6F08001A59FB /* ZBAESCrypto.h */,
 				6D2B216A20EC6F08001A59FB /* ZBAESCrypto.m */,
+				6D35D2CB20F36D7400C23A5B /* ZBMD5Crypto.h */,
+				6D35D2CC20F36D7400C23A5B /* ZBMD5Crypto.m */,
+				6D35D2CE20F36F3B00C23A5B /* ZBHexCrypto.h */,
+				6D35D2CF20F36F3B00C23A5B /* ZBHexCrypto.m */,
+				6D80564220F4A34E0034BB05 /* ZBSHACrypto.h */,
+				6D80564320F4A34E0034BB05 /* ZBSHACrypto.m */,
+				6D80564520F4AA280034BB05 /* ZBHmacCrypto.h */,
+				6D80564620F4AA280034BB05 /* ZBHmacCrypto.m */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -210,8 +235,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D5F838820E60D81004B3F6C /* ViewController.m in Sources */,
+				6D80564420F4A34E0034BB05 /* ZBSHACrypto.m in Sources */,
 				6D5F839320E60D85004B3F6C /* main.m in Sources */,
+				6DFA01F42110656800E2085A /* encrypt.c in Sources */,
+				6D35D2D020F36F3B00C23A5B /* ZBHexCrypto.m in Sources */,
 				6D2B216B20EC6F08001A59FB /* ZBAESCrypto.m in Sources */,
+				6D80564720F4AA280034BB05 /* ZBHmacCrypto.m in Sources */,
+				6D35D2CD20F36D7400C23A5B /* ZBMD5Crypto.m in Sources */,
 				6D5F838520E60D81004B3F6C /* AppDelegate.m in Sources */,
 				6D5F839C20E612BD004B3F6C /* ZBRSACrypto.m in Sources */,
 			);
