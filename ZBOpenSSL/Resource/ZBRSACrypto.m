@@ -7,6 +7,7 @@
 //  相关函数调用请参考：http://www.qmailer.net/archives/216.html
 
 #import "ZBRSACrypto.h"
+#import <openssl/rsa.h>
 #import <openssl/pem.h>
 #import <openssl/md5.h>
 

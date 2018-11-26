@@ -12,7 +12,10 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/githubzb/ZBOpenSSL.git", :tag => "#{s.version}" }
   s.requires_arc = true
   s.source_files = "#{s.name}/Resource/**/*.{h,m}"
-  s.vendored_frameworks = "openssl.framework"
   s.dependency "GTMBase64", "~> 1.0.1"
+
+  s.subspec "openssl" do |ossl|
+    ossl.vendored_frameworks = "openssl.framework"
+  end
 
 end

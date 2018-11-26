@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <openssl/rsa.h>
 #import <GTMBase64/GTMBase64.h>
 
 typedef NS_ENUM(int , ZBRSASize) {
@@ -22,8 +21,8 @@ typedef NS_ENUM(NSInteger, ZBKeyType) {
 };
 
 typedef NS_ENUM(int, ZBRSAPaddingType) {
-    ZBRSAPaddingTypePKCS1       = RSA_PKCS1_PADDING,
-    ZBRSAPaddingTypePKCS1_OAEP  = RSA_PKCS1_OAEP_PADDING
+    ZBRSAPaddingTypePKCS1       = 1,
+    ZBRSAPaddingTypePKCS1_OAEP  = 4
 };
 
 /**
