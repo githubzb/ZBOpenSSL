@@ -10,7 +10,6 @@
 
 @interface ZBHmacCrypto : NSObject
 
-+ (NSData *)hmacSHA:(NSData *)d password:(NSString *)pwd;
 + (NSData *)hmacSHA1:(NSData *)d password:(NSString *)pwd;
 + (NSData *)hmacSHA224:(NSData *)d password:(NSString *)pwd;
 + (NSData *)hmacSHA256:(NSData *)d password:(NSString *)pwd;
@@ -20,7 +19,6 @@
 
 @end
 
-NSString * ZBHmacSHA(NSString *str, NSString *pwd);
 NSString * ZBHmacSHA1(NSString *str, NSString *pwd);
 NSString * ZBHmacSHA224(NSString *str, NSString *pwd);
 NSString * ZBHmacSHA256(NSString *str, NSString *pwd);

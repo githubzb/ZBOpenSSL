@@ -29,24 +29,26 @@
     if (![self isHexString:hex]) {
         return nil;
     }
-    NSMutableData *hexData = [[NSMutableData alloc] initWithCapacity:20];
-    NSRange range;
-    if ([hex length] % 2 == 0) {
-        range = NSMakeRange(0, 2);
-    } else {
-        range = NSMakeRange(0, 1);
+    NSString *hexStr = [hex stringByReplacingOccurrencesOfString:@" " withString:@""];
+    hexStr = [hexStr lowercaseString];
+    NSUInteger len = hexStr.length;
+    if (!len) return nil;
+    unichar *buf = malloc(sizeof(unichar) * len);
+    if (!buf) return nil;
+    [hexStr getCharacters:buf range:NSMakeRange(0, len)];
+    
+    NSMutableData *result = [NSMutableData data];
+    unsigned char bytes;
+    char str[3] = { '\0', '\0', '\0' };
+    int i;
+    for (i = 0; i < len / 2; i++) {
+        str[0] = buf[i * 2];
+        str[1] = buf[i * 2 + 1];
+        bytes = strtol(str, NULL, 16);
+        [result appendBytes:&bytes length:1];
     }
-    for (NSInteger i = range.location; i < [hex length]; i += 2) {
-        unsigned int anInt;
-        NSString *hexCharStr = [hex substringWithRange:range];
-        NSScanner *scanner = [[NSScanner alloc] initWithString:hexCharStr];
-        [scanner scanHexInt:&anInt];
-        NSData *entity = [[NSData alloc] initWithBytes:&anInt length:1];
-        [hexData appendData:entity];
-        range.location += range.length;
-        range.length = 2;
-    }
-    return [NSData dataWithData:hexData];
+    free(buf);
+    return [NSData dataWithData:result];
 }
 
 + (BOOL)isHexString:(NSString *)str{

@@ -10,7 +10,6 @@
 
 @interface ZBSHACrypto : NSObject
 
-+ (NSData *)sha:(NSData *)d;
 + (NSData *)sha1:(NSData *)d;
 + (NSData *)sha224:(NSData *)d;
 + (NSData *)sha256:(NSData *)d;
@@ -19,7 +18,6 @@
 
 @end
 
-NSString * ZBSha(NSString *str);
 NSString * ZBSha1(NSString *str);
 NSString * ZBSha224(NSString *str);
 NSString * ZBSha256(NSString *str);

@@ -24,11 +24,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    NSString *str = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-//    NSString *encodeStr = ZBRSA_encrypt(str, ZBKeyTypePublic, ZBRSAPaddingTypePKCS1);
-//    NSLog(@"--------加密数据:%@", encodeStr);
-//    NSString *decodeStr = ZBRSA_decrypt(encodeStr, ZBKeyTypePrivate, ZBRSAPaddingTypePKCS1);
-//    NSLog(@"--------解密数据:%@", decodeStr);
+    NSString *str = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    NSString *encodeStr = ZBRSA_encrypt(str, ZBKeyTypePublic, ZBRSAPaddingTypePKCS1);
+    NSLog(@"--------加密数据:%@", encodeStr);
+    NSString *decodeStr = ZBRSA_decrypt(encodeStr, ZBKeyTypePrivate, ZBRSAPaddingTypePKCS1);
+    NSLog(@"--------解密数据:%@", decodeStr);
     
 //    ZBRSA_CustomPUBKEY_init(ZBRSACrypto.publicKey, ZBPemTypePKCS8);
 //    ZBRSA_CustomPrivate_init(ZBRSACrypto.privateKey, ZBPemTypePKCS8);

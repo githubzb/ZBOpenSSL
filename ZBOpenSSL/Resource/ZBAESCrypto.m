@@ -20,7 +20,7 @@ NSString * const ZBAesErrorDomain = @"ZBAESDomain";
         return nil;
     }
     unsigned char *buf = (unsigned char*)malloc(sizeof(unsigned char) * size);
-    RAND_bytes(buf, size);
+    RAND_bytes(buf, (int)size);
     return [NSData dataWithBytesNoCopy:buf length:size];
 }
 
@@ -47,28 +47,28 @@ NSString * const ZBAesErrorDomain = @"ZBAESDomain";
     }
     size_t blockLength = 0;
     size_t cipherBytesLength = 0;
-    EVP_CIPHER_CTX ctx;
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     const EVP_CIPHER *evp_cipher = [self evp_cipher_size:ksize mode:mode];
     unsigned char *cipherBytes = (unsigned char*)malloc(data.length+AES_BLOCK_SIZE);
     memset(cipherBytes, 0, data.length+AES_BLOCK_SIZE);
-    if (!EVP_EncryptInit(&ctx, evp_cipher, key.bytes, iv.bytes)) {
+    if (!EVP_EncryptInit(ctx, evp_cipher, key.bytes, iv.bytes)) {
         free(cipherBytes);
         *error = [self EVPError];
         return nil;
     }
-    if (!EVP_EncryptUpdate(&ctx, cipherBytes, (int *)&blockLength, data.bytes, (int)data.length)) {
-        free(cipherBytes);
-        *error = [self EVPError];
-        return nil;
-    }
-    cipherBytesLength += blockLength;
-    if (!EVP_EncryptFinal(&ctx, cipherBytes+cipherBytesLength, (int *)&blockLength)) {
+    if (!EVP_EncryptUpdate(ctx, cipherBytes, (int *)&blockLength, data.bytes, (int)data.length)) {
         free(cipherBytes);
         *error = [self EVPError];
         return nil;
     }
     cipherBytesLength += blockLength;
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    if (!EVP_EncryptFinal(ctx, cipherBytes+cipherBytesLength, (int *)&blockLength)) {
+        free(cipherBytes);
+        *error = [self EVPError];
+        return nil;
+    }
+    cipherBytesLength += blockLength;
+    EVP_CIPHER_CTX_free(ctx);
     return [NSData dataWithBytesNoCopy:cipherBytes length:cipherBytesLength];
 }
 + (NSData *)decrypt_mode:(ZBAESMode)mode
@@ -89,26 +89,26 @@ NSString * const ZBAesErrorDomain = @"ZBAESDomain";
     size_t messageBytesLength = 0;
     size_t blockLength = 0;
     unsigned char *messageBytes = (unsigned char*)malloc(data.length);
-    EVP_CIPHER_CTX ctx;
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     const EVP_CIPHER *evp_cipher = [self evp_cipher_size:ksize mode:mode];
-    if (!EVP_DecryptInit(&ctx, evp_cipher, key.bytes, iv.bytes)) {
+    if (!EVP_DecryptInit(ctx, evp_cipher, key.bytes, iv.bytes)) {
         free(messageBytes);
         *error = [self EVPError];
         return nil;
     }
-    if (!EVP_DecryptUpdate(&ctx, messageBytes, (int *)&blockLength, data.bytes, (int)data.length)) {
-        free(messageBytes);
-        *error = [self EVPError];
-        return nil;
-    }
-    messageBytesLength += blockLength;
-    if (!EVP_DecryptFinal(&ctx, messageBytes+messageBytesLength, (int *)&blockLength)) {
+    if (!EVP_DecryptUpdate(ctx, messageBytes, (int *)&blockLength, data.bytes, (int)data.length)) {
         free(messageBytes);
         *error = [self EVPError];
         return nil;
     }
     messageBytesLength += blockLength;
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    if (!EVP_DecryptFinal(ctx, messageBytes+messageBytesLength, (int *)&blockLength)) {
+        free(messageBytes);
+        *error = [self EVPError];
+        return nil;
+    }
+    messageBytesLength += blockLength;
+    EVP_CIPHER_CTX_free(ctx);
     return [NSData dataWithBytesNoCopy:messageBytes length:messageBytesLength];
 }
 

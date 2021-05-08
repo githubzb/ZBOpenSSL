@@ -12,24 +12,6 @@
 
 @implementation ZBSHACrypto
 
-+ (NSData *)sha:(NSData *)d{
-    if (![d isKindOfClass:[NSData class]] || d.length==0) {
-        return nil;
-    }
-    SHA_CTX ctx;
-    unsigned char dataDigest[SHA_DIGEST_LENGTH];
-    if (SHA_Init(&ctx)!=1) {
-        return nil;
-    }
-    if (SHA_Update(&ctx, d.bytes, (int)d.length)!=1) {
-        return nil;
-    }
-    if (SHA_Final(dataDigest, &ctx)!=1) {
-        return nil;
-    }
-    return [NSData dataWithBytes:dataDigest length:sizeof(dataDigest)];
-}
-
 + (NSData *)sha1:(NSData *)d{
     if (![d isKindOfClass:[NSData class]] || d.length==0) {
         return nil;
@@ -123,11 +105,6 @@
 
 @end
 
-NSString * ZBSha(NSString *str){
-    NSData *d = [str dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *data = [ZBSHACrypto sha:d];
-    return [ZBHexCrypto hexString:data];
-}
 NSString * ZBSha1(NSString *str){
     NSData *d = [str dataUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [ZBSHACrypto sha1:d];

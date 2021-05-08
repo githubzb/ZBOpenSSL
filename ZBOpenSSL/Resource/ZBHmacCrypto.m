@@ -12,10 +12,6 @@
 
 @implementation ZBHmacCrypto
 
-+ (NSData *)hmacSHA:(NSData *)d password:(NSString *)pwd{
-    return [self hmac:d password:pwd md:EVP_sha()];
-}
-
 + (NSData *)hmacSHA1:(NSData *)d password:(NSString *)pwd{
     return [self hmac:d password:pwd md:EVP_sha1()];
 }
@@ -48,28 +44,23 @@
     NSData *key = [pwd dataUsingEncoding:NSUTF8StringEncoding];
     unsigned char dataDigest[HMAC_MAX_MD_CBLOCK];
     unsigned int len = 0;
-    HMAC_CTX ctx;
-    HMAC_CTX_init(&ctx);
-    if (HMAC_Init_ex(&ctx, key.bytes, (int)key.length, md, NULL)!=1) {
+    HMAC_CTX *ctx = HMAC_CTX_new();
+    if (HMAC_Init_ex(ctx, key.bytes, (int)key.length, md, NULL)!=1) {
         return nil;
     }
-    if (HMAC_Update(&ctx, d.bytes, (int)d.length)!=1) {
+    if (HMAC_Update(ctx, d.bytes, (int)d.length)!=1) {
         return nil;
     }
-    if (HMAC_Final(&ctx, dataDigest, &len)!=1) {
+    if (HMAC_Final(ctx, dataDigest, &len)!=1) {
         return nil;
     }
-    HMAC_CTX_cleanup(&ctx);
+    HMAC_CTX_free(ctx);
     return [NSData dataWithBytes:dataDigest length:len];
 }
 
 @end
 
-NSString * ZBHmacSHA(NSString *str, NSString *pwd){
-    NSData *d = [str dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *data = [ZBHmacCrypto hmacSHA:d password:pwd];
-    return [ZBHexCrypto hexString:data];
-}
+
 NSString * ZBHmacSHA1(NSString *str, NSString *pwd){
     NSData *d = [str dataUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [ZBHmacCrypto hmacSHA1:d password:pwd];
