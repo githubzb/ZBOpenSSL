@@ -10,6 +10,7 @@
 #import <openssl/rsa.h>
 #import <openssl/pem.h>
 #import <openssl/md5.h>
+#include <openssl/bn.h>
 
 static NSString *const ZBBEGIN_PUBLIC_PKCS1_KEY   = @"-----BEGIN RSA PUBLIC KEY-----";
 static NSString *const ZBBEGIN_PUBLIC_PKCS8_KEY   = @"-----BEGIN PUBLIC KEY-----";
